@@ -1,0 +1,290 @@
+/* Estilo general del Dashboard */
+.dashboard {
+  display: flex;
+  font-family: 'Arial', sans-serif;
+ 
+}
+
+/* Barra lateral */
+.sidebar {
+  width: 200px;
+  background-color: #0c9790;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botones de categoría en la barra lateral */
+.categories {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-btn {
+  background-color: #1fcac2;
+  color: white;
+  border: none;
+  padding: 15px;
+  margin: 10px 0;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.category-btn.active {
+  background-color: #34495E;
+}
+
+.category-btn:hover {
+  background-color: #293a4b;
+}
+
+/* Contenido principal */
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Filtros de búsqueda */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.filter-item {
+  flex: 1;
+}
+
+.filter-input, .filter-select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #BDC3C7;
+}
+
+.filter-select {
+  background-color: #f0f0f0;
+}
+
+/* Resumen de estadísticas */
+.stats-summary {
+  margin-top: 20px;
+}
+
+/* Galería de Cards */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+/* Card - Contenedor */
+.card {
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Efecto de movimiento */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Sombra más prominente */
+}
+
+/* Contenedor de la imagen */
+.card-image-container {
+  position: relative; /* Permite colocar el título dentro de la imagen */
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-bottom: 2px solid #BDC3C7;
+}
+
+/* Imagen de la Card */
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Título de la Card */
+.card-title {
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2C3E50;
+  margin: 0;
+  line-height: 1.2;
+  background-color: rgba(255, 255, 255, 0.7); /* Fondo semitransparente */
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* Detalles de la Card */
+.card-details {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: auto;
+  gap: 5px;
+}
+
+/* Descripción de la Card */
+.card-description {
+  font-size: 14px;
+  color: #7F8C8D;
+  margin-bottom: 10px;
+  line-height: 1.3;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Precio de la Card */
+.card-price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1ABC9C;
+  margin-bottom: 0px;
+  line-height: 0;
+}
+
+/* Ubicación de la Card */
+.card-location {
+  font-size: 14px;  /* Ajusta el tamaño del ícono */
+  color: #BDC3C7;   /* Color del ícono */
+  margin-bottom: 0px;  /* Espacio inferior */
+  display: flex;
+  align-items: center;  /* Alinea el ícono verticalmente */
+  font-style: italic;
+}
+.card-location i {
+  margin-right: 5px; /* Espacio entre el ícono y la ubicación */
+}
+
+/* Estado de la Card */
+.card-estado {
+  font-size: 14px;
+  color: #BDC3C7;
+  margin-bottom: 0px;
+  font-style: italic;
+  line-height: 0;
+}
+
+/* Vendedor de la Card */
+.card-vendedor {
+  font-size: 14px;
+  color: #BDC3C7;
+  margin-bottom: 3px;
+  font-style: italic;
+  line-height: 1.2;
+}
+
+/* Botón de la Card */
+.card-button {
+  background-color: #1ABC9C;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.card-button:hover {
+  background-color: #81dd08;
+}
+
+/* Pie de la Card - Información adicional */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+/* Vendor de la Card */
+.card-footer .card-vendor {
+  font-weight: 600;
+  color: #2C3E50;
+  font-size: 14px;
+}
+
+/* Información adicional del footer */
+.card-footer p {
+  font-size: 12px;
+  color: #BDC3C7;
+}
+
+
+/* Estilo del botón "¿Quieres vender?" */
+.sell-button {
+  background-color: #eeeeee;
+  color: rgb(33, 47, 75);
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.sell-button:hover {
+  background-color:  #34495E;
+  color: #f9f9f9
+  ;
+}
+
+
+/* Estilo del formulario de venta */
+.sell-form-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.sell-form h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.sell-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.sell-form input,
+.sell-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #BDC3C7;
+}
+
+.sell-form-submit {
+  background-color: #1ABC9C;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.sell-form-submit:hover {
+  background-color: #16A085;
+}

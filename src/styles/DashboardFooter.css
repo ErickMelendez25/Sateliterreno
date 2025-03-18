@@ -1,6 +1,6 @@
 /* Estilos para el pie de página */
 .dashboard-footer {
-    background: linear-gradient(180deg, #129b1d, #005B2B); /* Gradiente verde institucional de la UNCP */
+    background: #2C3E50; /* Gradiente verde institucional de la UNCP */
     padding: 30px 20px; /* Añadido más espacio para hacerlo más elegante */
     color: white;
     display: flex;

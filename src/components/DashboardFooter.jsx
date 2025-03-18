@@ -4,7 +4,7 @@ import '../styles/DashboardFooter.css';
 
 function DashboardFooter() {
   const [showText, setShowText] = useState(false); // Estado para manejar la visibilidad del texto
-  const fullText = "El mapeo de procesos sigue estándares de ISO 9001 y 21001, ICACIT y SINEACE";
+  const fullText = "Tu próximo hogar o terreno está a solo un clic. Compra, vende y encuentra lo que buscas con confianza.";
 
   useEffect(() => {
     // Hacemos que el texto aparezca después de un pequeño retraso

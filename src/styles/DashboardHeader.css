@@ -1,11 +1,10 @@
 /* Estilos generales */
 .dashboard-header {
-
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px;
-    background-color: #9a9ba0cb;
+    background-color:   #34495E;
     color: rgb(255, 255, 255);
     position: relative; /* Cambiar de 'fixed' a 'relative' */
     top: 0;
@@ -15,7 +14,9 @@
     box-sizing: border-box;
     z-index: 1; /* Aseguramos que el header tenga un z-index superior */
     overflow: hidden; /* Evita el desbordamiento de contenido */
+    height: 80px; /* Ajustar la altura aquí */
 }
+
 
 /* Estilo para los logos */
 .logo-container {
@@ -60,12 +61,12 @@
 .nav-item {
     
     text-decoration: none;
-    color: rgb(255, 255, 255);
+    color: rgb(255, 10, 214);
     font-size: 0.9rem;
     font-weight: 500;
     padding: 8px 15px;
     border-radius: 20px;
-    background-color: rgb(30, 148, 40) ;/*Fondo blanco semi-transparente */
+    background-color: rgb(255, 255, 255) ;/*Fondo blanco semi-transparente */
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
     white-space: nowrap;
 }
@@ -79,63 +80,7 @@
     padding: 10px 20px;
 }
 
-.user-icon-container {
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    position: absolute;
-    margin-top: 5px;
-    top: 0;
-    right: 40px;
-    transform: translateX(25%);
-    text-align: center;
-    margin-left: 20px;
-    
-}
 
-.user-icon {
-    
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 1px solid white;
-    object-fit: cover;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 4px;/* Menor margen entre el icono y el texto */
-}
-
-.user-icon:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
-}
-
-/* Estilo para la información del usuario */
-.user-info {
-    
-    color: #000000;
-    margin-top: -px;  /* Ajuste de margen para acercar el texto al icono */
-    line-height: 1.1;  /* Reducir el interlineado */
-    text-align: center;
-    max-width: 100%; /* Asegura que el contenido no sobrepase el contenedor */
-    overflow: hidden; /* Elimina el desbordamiento del contenido */
-    word-wrap: break-word; /* Se asegura de que el texto largo se divida */
-    box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
-    margin-left: 15px;
-}
-
-/* Estilo para las etiquetas <p> dentro de .user-info */
-.user-info p {
-    margin: 0; /* Elimina el margen predeterminado de los párrafos */
-    padding: 0; /* Elimina el relleno interno de los párrafos */
-    line-height: 1; /* Elimina el interlineado entre las líneas de texto */
-    color: #ffffff;
-    
-    text-align: center; /* Alinea el texto a la derecha */
-    word-wrap: break-word; /* Asegura que el texto largo no cause desbordamiento */
-    white-space: normal; /* Asegura que los saltos de línea ocurran si es necesario */
-
-}
 
 
 /* Menú de opciones */
@@ -175,8 +120,23 @@
     color: white;
 }
 
-.user-icon-container:hover .menu-options {
-    display: block;
+/* Contenedor de la foto de perfil */
+.user-photo-container {
+    width: 50px;  /* Tamaño del contenedor */
+    height: 50px; /* Tamaño del contenedor */
+    border-radius: 50%; /* Hace el contenedor circular */
+    overflow: hidden; /* Asegura que cualquier contenido fuera del círculo se oculte */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Imagen dentro del contenedor */
+.user-icon {
+    width: 100%;   /* La imagen ocupa el 100% del contenedor */
+    height: 100%;  /* La imagen ocupa el 100% del contenedor */
+    object-fit: cover; /* Asegura que la imagen cubra el área del contenedor sin distorsionarse */
+    border-radius: 50%; /* Hace la imagen circular */
 }
 
 /* Estilos para el modal de confirmación */
@@ -190,7 +150,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 9999; /* Asegura que esté en una capa superior */
     transition: opacity 0.3s ease-in-out;
 }
 
@@ -201,6 +161,7 @@
     text-align: center;
     max-width: 400px;
     width: 100%;
+    z-index: 10000;
 }
 
 .modal-container h2 {

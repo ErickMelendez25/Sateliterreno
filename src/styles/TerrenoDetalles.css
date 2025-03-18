@@ -1,0 +1,143 @@
+/* TerrenoDetalles.css */
+
+/* Estilo general del contenedor */
+.terreno-detalles {
+    max-width: auto;
+    margin: auto;
+    padding: 30px;
+    font-family: 'Helvetica Neue', sans-serif;  /* Fuente más elegante */
+    background-color: #ffffff; /* Fondo limpio */
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1); /* Sombras suaves para profundidad */
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: flex-start;
+}
+
+/* Título del terreno */
+.terreno-detalles h2 {
+    font-size: 2.2rem;
+    color: #2C3E50;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-align: left;
+    line-height: 1.2;
+}
+
+/* Contenedor de la imagen (en la izquierda) */
+.terreno-imagenes {
+    flex: 1;
+    max-width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #f4f4f4; /* Fondo claro */
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12); /* Sombras más suaves */
+}
+
+.terreno-imagenes img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+.terreno-imagenes img:hover {
+    transform: scale(1.05); /* Efecto de hover suave */
+}
+
+.terreno-imagenes p {
+    text-align: center;
+    font-size: 1rem;
+    color: #95a5a6;
+    margin-top: 10px;
+}
+
+/* Estilo para los detalles del terreno (a la derecha) */
+.terreno-info {
+    flex: 1;
+    max-width: 55%;
+    display: flex;
+    flex-direction: column;
+}
+
+.terreno-info .info-section {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.terreno-info p {
+    font-size: 1rem;
+    color: #34495e;
+    line-height: 1.5; /* Interlineado más compacto */
+    margin-bottom: 12px;
+}
+
+.terreno-info p strong {
+    color: #2C3E50;
+    font-weight: bold;
+}
+
+/* Detalles del terreno organizados en 2 columnas */
+.detalles-adicionales {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.column {
+    flex: 1;
+    min-width: 45%; /* Asegura que las columnas sean iguales */
+    margin-bottom: 20px;
+}
+
+/* WhatsApp Button */
+.whatsapp-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.whatsapp-button {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #25D366; /* Color verde de WhatsApp */
+    color: #fff;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.whatsapp-button:hover {
+    background-color: #128C7E; /* Color verde oscuro al hacer hover */
+}
+
+.whatsapp-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.loading {
+    text-align: center;
+    font-size: 1.4rem;
+    color: #e74c3c;
+    font-weight: 500;
+}
+
+/* Estilos para mensajes de error o sin imágenes */
+.no-imagenes {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #e74c3c;
+    font-weight: 600;
+}
