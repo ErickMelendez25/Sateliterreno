@@ -10,18 +10,38 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false); // Estado para manejar la carga
+  const [usuarios, setUsuarios] = useState([]); // Estado para manejar la lista de usuarios
   const navigate = useNavigate();
 
   const apiUrl = process.env.NODE_ENV === 'production'
     ? 'https://sateliterreno-production.up.railway.app'
     : 'http://localhost:5000';
 
+
+  // Función para obtener la lista de usuarios
+  const fetchUsuarios = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/usuarios`);
+      console.log('Usuarios obtenidos:', response.data);
+      setUsuarios(response.data);
+    } catch (error) {
+      console.error('Error al obtener usuarios:', error);
+      setErrorMessage('No se pudo obtener la lista de usuarios');
+    }
+  };
+
+  // Llamada para obtener los usuarios cuando se carga el componente
+  useEffect(() => {
+    fetchUsuarios();
+  }, []);
+
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true); // Iniciar carga
 
     try {
-      const response = await axios.post(`${apiUrl}/login`, { correo: username, password });
+      const response = await axios.post(`${apiUrl}/api/login`, { correo: username, password });
       localStorage.setItem('authToken', response.data.token);
       localStorage.setItem('usuario', JSON.stringify(response.data.usuario));
       setLoading(false); // Detener carga

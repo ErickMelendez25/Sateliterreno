@@ -36,7 +36,7 @@ const pool = mysql.createPool({
 
 
 // Endpoint de autenticación con Google
-app.post('/auth', (req, res, next) => {
+app.post('api/auth', (req, res, next) => {
   console.log('Solicitud POST recibida en /auth');
   next();
 }, async (req, res) => {
