@@ -28,7 +28,10 @@ app.use(cors({
 app.use(express.json());
 
 // Endpoint de autenticación con Google
-app.post('/auth/google', async (req, res) => {
+app.post('/auth/google', (req, res, next) => {
+  console.log('Solicitud POST recibida en /auth/google');
+  next();
+}, async (req, res) => {
   const { google_id, nombre, email, imagen_perfil } = req.body;
 
   if (!google_id || !email) {
