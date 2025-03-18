@@ -20,12 +20,18 @@ const pool = mysql.createPool({
   queueLimit: 0,  // Sin límite de espera
 });
 
-// Middleware
-app.use(cors({ 
-  origin: ['http://localhost:5173', 'https://sateliterreno-production.up.railway.app'], 
-  credentials: true 
-}));
+// Configura CORS para permitir solicitudes solo desde tu frontend en producción
+const corsOptions = {
+  origin: 'https://sateliterreno-production.up.railway.app', // Permitir solo solicitudes desde este dominio
+  methods: 'GET, POST, PUT, DELETE', // Métodos permitidos
+  allowedHeaders: 'Content-Type, Authorization', // Encabezados permitidos
+};
+
+// Aplica la configuración de CORS
+app.use(cors(corsOptions));
+s
 app.use(express.json());
+
 
 // Endpoint de autenticación con Google
 app.post('/auth/google', (req, res, next) => {
