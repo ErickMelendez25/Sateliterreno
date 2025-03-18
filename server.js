@@ -3,9 +3,13 @@ import mysql from 'mysql2/promise';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 import fetch from 'node-fetch';
 
 dotenv.config();
+
+
+
 const app = express();
 const port = process.env.DB_PORT || 8080;
 
@@ -14,11 +18,10 @@ const corsOptions = {
   origin: 'https://sateliterreno-production.up.railway.app', // Permitir solo solicitudes desde este dominio
   methods: 'GET, POST, PUT, DELETE', // Métodos permitidos
   allowedHeaders: 'Content-Type, Authorization', // Encabezados permitidos
-};s
+};
 
 // Aplica la configuración de CORS
 app.use(cors(corsOptions));
-s
 app.use(express.json());
 
 // Crear un pool de conexiones en lugar de una conexión única
@@ -209,11 +212,10 @@ app.post('/api/Createterrenos', async (req, res) => {
 });
 
 
-// Si usas React, por ejemplo
+// Para cualquier otra ruta (no API), servir el index.html
 app.use(express.static(path.join(__dirname, 'dist')));
 
-
-// Para cualquier otra ra, servir el index.html
+// Esta ruta debe ir **al final** después de todas las rutas API
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });

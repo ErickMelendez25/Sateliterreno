@@ -67,7 +67,7 @@ const Login = () => {
       localStorage.removeItem('usuario');
   
       // Verificar usuario en el backend
-      const { data } = await axios.post(`${apiUrl}/auth`, {
+      const { data } = await axios.post(`${apiUrl}/api/auth`, {
         google_id: userInfo.sub,
         nombre: userInfo.name,
         email: userInfo.email,
