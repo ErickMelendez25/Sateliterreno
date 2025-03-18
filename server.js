@@ -209,10 +209,18 @@ app.post('/api/Createterrenos', async (req, res) => {
 });
 
 
+// Si usas React, por ejemplo
+app.use(express.static(path.join(__dirname, 'dist')));
+
+
+// Para cualquier otra ra, servir el index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 
 
 // Iniciar el servidor
 app.listen(port, () => {
-  console.log(`Servidor corriendo en el puerto ${port}`);
+  console.log(`Servidor corriendo en http://localhost:${port}`);
 });
