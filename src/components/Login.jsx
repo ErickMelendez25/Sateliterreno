@@ -37,14 +37,14 @@ const Login = () => {
   
     try {
       const { credential } = response;
-      const userInfo = jwt_decode(credential);
+      const userInfo = jwt_decode(credential);  
       
       // Limpiar el localStorage antes de guardar nuevos datos
       localStorage.removeItem('authToken');
       localStorage.removeItem('usuario');
   
       // Verificar usuario en el backend
-      const { data } = await axios.post(`${apiUrl}/auth/google`, {
+      const { data } = await axios.post(`${apiUrl}/auth`, {
         google_id: userInfo.sub,
         nombre: userInfo.name,
         email: userInfo.email,

@@ -9,17 +9,6 @@ dotenv.config();
 const app = express();
 const port = process.env.DB_PORT || 5000;
 
-// Crear un pool de conexiones en lugar de una conexión única
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,  // Espera si no hay conexiones disponibles
-  connectionLimit: 10,  // Número máximo de conexiones simultáneas
-  queueLimit: 0,  // Sin límite de espera
-});
-
 // Configura CORS para permitir solicitudes solo desde tu frontend en producción
 const corsOptions = {
   origin: 'https://sateliterreno-production.up.railway.app', // Permitir solo solicitudes desde este dominio
@@ -32,10 +21,23 @@ app.use(cors(corsOptions));
 s
 app.use(express.json());
 
+// Crear un pool de conexiones en lugar de una conexión única
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  waitForConnections: true,  // Espera si no hay conexiones disponibles
+  connectionLimit: 10,  // Número máximo de conexiones simultáneas
+  queueLimit: 0,  // Sin límite de espera
+});
+
+
+
 
 // Endpoint de autenticación con Google
-app.post('/auth/google', (req, res, next) => {
-  console.log('Solicitud POST recibida en /auth/google');
+app.post('/auth', (req, res, next) => {
+  console.log('Solicitud POST recibida en /auth');
   next();
 }, async (req, res) => {
   const { google_id, nombre, email, imagen_perfil } = req.body;
