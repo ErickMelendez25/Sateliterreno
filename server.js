@@ -128,7 +128,7 @@ app.get('/api/usuarios', async (req, res) => {
   try {
     connection = await pool.getConnection();
     const [rows] = await connection.execute('SELECT * FROM usuarios');
-    res.json(rows);
+    res.json(rows);  // Asegúrate de que res.json() esté siendo usado para devolver los datos como JSON
   } catch (error) {
     console.error('Error al obtener usuarios:', error);
     res.status(500).json({ message: 'Error en el servidor' });
