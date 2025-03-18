@@ -7,14 +7,14 @@ import fetch from 'node-fetch';
 
 dotenv.config();
 const app = express();
-const port = process.env.DB_PORT || 5000;
+const port = process.env.DB_PORT || 8080;
 
 // Configura CORS para permitir solicitudes solo desde tu frontend en producción
 const corsOptions = {
   origin: 'https://sateliterreno-production.up.railway.app', // Permitir solo solicitudes desde este dominio
   methods: 'GET, POST, PUT, DELETE', // Métodos permitidos
   allowedHeaders: 'Content-Type, Authorization', // Encabezados permitidos
-};
+};s
 
 // Aplica la configuración de CORS
 app.use(cors(corsOptions));
