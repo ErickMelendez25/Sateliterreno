@@ -24,6 +24,7 @@ const Login = () => {
   const fetchUsuarios = async () => {
     try {
       const response = await axios.get(`${apiUrl}/api/usuarios`);
+
       console.log('Usuarios obtenidos:', response.data);
       setUsuarios(response.data);
     } catch (error) {
