@@ -16,7 +16,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const apiUrl = process.env.NODE_ENV === 'production'
-    ? 'https://sateliterreno-production.up.railway.app'
+    ? 'https://sateliterreno-production.up.railway.app/'
     : 'http://localhost:5000';
 
 
@@ -44,7 +44,7 @@ const Login = () => {
     setLoading(true); // Iniciar carga
 
     try {
-      const response = await axios.post(`${apiUrl}/api/login`, { correo: username, password });
+      const response = await axios.post(`${apiUrl}api/login`, { correo: username, password });
       localStorage.setItem('authToken', response.data.token);
       localStorage.setItem('usuario', JSON.stringify(response.data.usuario));
       setLoading(false); // Detener carga
@@ -58,33 +58,33 @@ const Login = () => {
   const handleGoogleLoginSuccess = async (response) => {
     setLoading(true); // Iniciar carga
     console.log('Google login success response:', response);
-    
+  
     try {
       const { credential } = response;
       const userInfo = jwt_decode(credential);  
       console.log('Información del usuario decodificada:', userInfo);
-      
+  
       // Limpiar el localStorage antes de guardar nuevos datos
       localStorage.removeItem('authToken');
       localStorage.removeItem('usuario');
       console.log('LocalStorage limpio');
-    
-      // Verificar usuario en el backend
+  
+      // Enviar los datos al backend
       console.log('Enviando datos de autenticación al backend...');
-      const { data } = await axios.post(`${apiUrl}/api/auth`, {
+      const { data } = await axios.post(`${apiUrl}api/auth`, {
         google_id: userInfo.sub,
         nombre: userInfo.name,
         email: userInfo.email,
         imagen_perfil: userInfo.picture,
       });
-      
+  
       console.log('Respuesta del servidor:', data);
-      
+  
       // Guardar los nuevos datos del usuario
       localStorage.setItem('authToken', data.token);
       localStorage.setItem('usuario', JSON.stringify(data.usuario)); // Asegúrate de que el nombre sea correcto
       console.log('Datos de usuario y token guardados en localStorage');
-      
+  
       setLoading(false); // Detener carga
       navigate('/dashboard');
     } catch (error) {
@@ -93,6 +93,7 @@ const Login = () => {
       setErrorMessage('Error al iniciar sesión con Google');
     }
   };
+  
   
   
 

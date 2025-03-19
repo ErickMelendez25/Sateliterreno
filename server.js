@@ -22,10 +22,11 @@ const port = process.env.DB_PORT || 8080;
 // Configura CORS para permitir solicitudes solo desde tu frontend en producción
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? 'https://sateliterreno-production.up.railway.app' // Para producción
-    : 'http://localhost:3000', // Para desarrollo
-  methods: 'GET, POST, PUT, DELETE', 
-  allowedHeaders: 'Content-Type, Authorization',
+    ? 'https://sateliterreno-production.up.railway.app' 
+    : 'http://localhost:3000',
+  methods: 'GET, POST, PUT, DELETE',
+  allowedHeaders: 'Content-Type, Authorization, X-Requested-With',  // Agrega X-Requested-With
+  credentials: true,  // Asegúrate de permitir credenciales si es necesario
 };
 
 
@@ -48,60 +49,46 @@ const pool = mysql.createPool({
 
 
 // Endpoint de autenticación con Google
-app.post('/api/auth', (req, res, next) => {
-  console.log('Solicitud POST recibida en /auth');
-  next();
-}, async (req, res) => {
+app.post('api/auth', async (req, res) => {
   const { google_id, nombre, email, imagen_perfil } = req.body;
-
-  console.log('Datos recibidos en el body:', { google_id, nombre, email, imagen_perfil });
+  console.log('Datos recibidos en /api/auth:', { google_id, nombre, email, imagen_perfil });
 
   if (!google_id || !email) {
-    console.log('Faltan datos requeridos:', { google_id, email });
     return res.status(400).json({ message: 'Faltan datos requeridos' });
   }
 
   let connection;
-
   try {
-    console.log('Intentando obtener conexión desde el pool');
     connection = await pool.getConnection();
-    console.log('Conexión obtenida desde el pool:', connection);
+    console.log('Conexión obtenida desde el pool');
 
-    console.log('Verificando si el usuario existe en la base de datos...');
     const [rows] = await connection.execute('SELECT * FROM usuarios WHERE email = ?', [email]);
-    console.log('Resultado de la búsqueda en la base de datos:', rows);
 
     let usuario;
     if (rows.length === 0) {
-      console.log('Usuario no encontrado, insertando nuevo usuario...');
       await connection.execute(
         'INSERT INTO usuarios (google_id, nombre, email, imagen_perfil, tipo, puede_vender) VALUES (?, ?, ?, ?, ?, ?)',
         [google_id, nombre, email, imagen_perfil, 'comprador', false]
       );
-      console.log('Usuario insertado, obteniendo nuevo usuario...');
       const [newUser] = await connection.execute('SELECT * FROM usuarios WHERE email = ?', [email]);
       usuario = newUser[0];
-      console.log('Nuevo usuario insertado:', usuario);
     } else {
-      console.log('Usuario encontrado en la base de datos:', rows[0]);
       usuario = rows[0];
     }
 
-    console.log('Generando el token JWT...');
     const token = jwt.sign({ id: usuario.id, email: usuario.email }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    console.log('Token generado:', token);
 
     // Responder con el token y los datos del usuario
-    res.json({ token, usuario });
+    res.status(200).json({ token, usuario });
+
   } catch (error) {
-    console.error('Error en la autenticación con Google:', error);
+    console.error('Error en /api/auth:', error);
     res.status(500).json({ message: 'Error en el servidor' });
   } finally {
-    // Asegurarse de liberar la conexión al pool
     if (connection) connection.release();
   }
 });
+
 
 
 // Rutas para obtener los datos
