@@ -3,8 +3,14 @@ import mysql from 'mysql2/promise';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path';
+import { fileURLToPath } from 'url';   // Importa fileURLToPath
+import { dirname } from 'path';        // Importa dirname
+import path from 'path';  // Importa path
 import fetch from 'node-fetch';
+
+// Usamos import.meta.url para obtener la URL del archivo actual
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 dotenv.config();
 
