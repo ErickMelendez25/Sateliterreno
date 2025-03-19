@@ -23,7 +23,7 @@ const Login = () => {
   // Función para obtener la lista de usuarios
   const fetchUsuarios = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/usuarios`);
+      const response = await axios.get(`${apiUrl}api/usuarios`);
 
       console.log('Usuarios obtenidos:', response.data);
       setUsuarios(response.data);
