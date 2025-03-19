@@ -45,37 +45,43 @@ app.post('/api/auth', (req, res, next) => {
 }, async (req, res) => {
   const { google_id, nombre, email, imagen_perfil } = req.body;
 
+  console.log('Datos recibidos en el body:', { google_id, nombre, email, imagen_perfil });
+
   if (!google_id || !email) {
+    console.log('Faltan datos requeridos:', { google_id, email });
     return res.status(400).json({ message: 'Faltan datos requeridos' });
   }
 
   let connection;
 
   try {
-    // Obtén la conexión desde el pool
+    console.log('Intentando obtener conexión desde el pool');
     connection = await pool.getConnection();
-    
-    // Verificar si el usuario ya existe
+    console.log('Conexión obtenida desde el pool:', connection);
+
+    console.log('Verificando si el usuario existe en la base de datos...');
     const [rows] = await connection.execute('SELECT * FROM usuarios WHERE email = ?', [email]);
+    console.log('Resultado de la búsqueda en la base de datos:', rows);
 
     let usuario;
     if (rows.length === 0) {
-      // Si no existe, insertar el nuevo usuario
+      console.log('Usuario no encontrado, insertando nuevo usuario...');
       await connection.execute(
         'INSERT INTO usuarios (google_id, nombre, email, imagen_perfil, tipo, puede_vender) VALUES (?, ?, ?, ?, ?, ?)',
         [google_id, nombre, email, imagen_perfil, 'comprador', false]
       );
-
-      // Obtener el usuario recién insertado
+      console.log('Usuario insertado, obteniendo nuevo usuario...');
       const [newUser] = await connection.execute('SELECT * FROM usuarios WHERE email = ?', [email]);
       usuario = newUser[0];
+      console.log('Nuevo usuario insertado:', usuario);
     } else {
-      // Si ya existe, tomar los datos del usuario
+      console.log('Usuario encontrado en la base de datos:', rows[0]);
       usuario = rows[0];
     }
 
-    // Generar el token JWT
+    console.log('Generando el token JWT...');
     const token = jwt.sign({ id: usuario.id, email: usuario.email }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    console.log('Token generado:', token);
 
     // Responder con el token y los datos del usuario
     res.json({ token, usuario });

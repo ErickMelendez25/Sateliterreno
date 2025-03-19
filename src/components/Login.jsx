@@ -57,33 +57,43 @@ const Login = () => {
 
   const handleGoogleLoginSuccess = async (response) => {
     setLoading(true); // Iniciar carga
-  
+    console.log('Google login success response:', response);
+    
     try {
       const { credential } = response;
       const userInfo = jwt_decode(credential);  
+      console.log('Información del usuario decodificada:', userInfo);
       
       // Limpiar el localStorage antes de guardar nuevos datos
       localStorage.removeItem('authToken');
       localStorage.removeItem('usuario');
-  
+      console.log('LocalStorage limpio');
+    
       // Verificar usuario en el backend
+      console.log('Enviando datos de autenticación al backend...');
       const { data } = await axios.post(`${apiUrl}/api/auth`, {
         google_id: userInfo.sub,
         nombre: userInfo.name,
         email: userInfo.email,
         imagen_perfil: userInfo.picture,
       });
-  
+      
+      console.log('Respuesta del servidor:', data);
+      
       // Guardar los nuevos datos del usuario
       localStorage.setItem('authToken', data.token);
       localStorage.setItem('usuario', JSON.stringify(data.usuario)); // Asegúrate de que el nombre sea correcto
+      console.log('Datos de usuario y token guardados en localStorage');
+      
       setLoading(false); // Detener carga
       navigate('/dashboard');
     } catch (error) {
+      console.error('Error al iniciar sesión con Google:', error);
       setLoading(false); // Detener carga
       setErrorMessage('Error al iniciar sesión con Google');
     }
   };
+  
   
 
   const handleGoogleLoginFailure = (error) => {
