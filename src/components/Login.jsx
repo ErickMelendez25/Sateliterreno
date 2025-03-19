@@ -73,7 +73,7 @@ const Login = () => {
   
       // Enviar los datos al backend
       console.log('Enviando datos de autenticación al backend...');
-      const { data } = await axios.post(`${apiUrl}api/auth`, {
+      const { data } = await axios.post(`${apiUrl}/api/auth`, {
         google_id: userInfo.sub,
         nombre: userInfo.name,
         email: userInfo.email,
