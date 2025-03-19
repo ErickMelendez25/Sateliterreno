@@ -16,15 +16,17 @@ const Login = () => {
   const navigate = useNavigate();
 
   const apiUrl = process.env.NODE_ENV === 'production'
-    ? 'https://sateliterreno-production.up.railway.app/'
+    ? 'https://sateliterreno-production.up.railway.app'
     : 'http://localhost:5000';
 
 
   // Función para obtener la lista de usuarios
   const fetchUsuarios = async () => {
     try {
-      const response = await axios.get(`${apiUrl}api/usuarios`);
-
+      const response = await axios.get(`${apiUrl}/api/usuarios`);  // Asegúrate de tener una barra diagonal aquí.
+  
+      console.log(`${apiUrl}/api/usuarios`);  // Verifica que la URL sea correcta
+  
       console.log('Usuarios obtenidos:', response.data);
       setUsuarios(response.data);
     } catch (error) {
@@ -44,7 +46,7 @@ const Login = () => {
     setLoading(true); // Iniciar carga
 
     try {
-      const response = await axios.post(`${apiUrl}api/login`, { correo: username, password });
+      const response = await axios.post(`${apiUrl}/api/login`, { correo: username, password });
       localStorage.setItem('authToken', response.data.token);
       localStorage.setItem('usuario', JSON.stringify(response.data.usuario));
       setLoading(false); // Detener carga
