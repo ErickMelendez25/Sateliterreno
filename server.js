@@ -17,7 +17,7 @@ dotenv.config();
 
 
 const app = express();
-const port = process.env.DB_PORT ||5000;
+const port = process.env.PORT ||5000;
 
 // Configura CORS para permitir solicitudes solo desde tu frontend en producción
 const corsOptions = {
