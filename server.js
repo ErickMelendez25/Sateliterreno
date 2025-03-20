@@ -258,6 +258,7 @@ app.post('/api/Createterrenos', async (req, res) => {
 });
 
 
+app.use('/favicon.ico', express.static(path.join(__dirname, 'favicon.ico')));
 
 // Si usas React, por ejemplo
 app.use(express.static(path.join(__dirname, 'dist')));
