@@ -17,7 +17,7 @@ dotenv.config();
 
 
 const app = express();
-const port = process.env.PORT ||5000;
+const port = process.env.PORT ||8080;
 
 // Configura CORS para permitir solicitudes solo desde tu frontend en producción
 const corsOptions = {
@@ -72,7 +72,7 @@ async function verificarConexion() {
     
   } catch (err) {
     console.error('Error al conectar a la base de datos:', err.stack);
-    process.exit(1);  // Si hay un error, detén el proceso
+    
   } finally {
     // Libera la conexión cuando termines
     if (connection) connection.release();
