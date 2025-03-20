@@ -22,7 +22,7 @@ const port = process.env.PORT ||8080;
 // Configura CORS para permitir solicitudes solo desde tu frontend en producción
 
 const corsOptions = {
-  origin: ['https://sateliterreno-production.up.railway.app', 'http://localhost:5000'],
+  origin: [ process.env.URLFRONTEND || 'https://sateliterreno-production.up.railway.app', 'http://localhost:5000'],
   methods: 'GET, POST, PUT, DELETE', // Asegúrate de permitir el método POST
   allowedHeaders: 'Content-Type, Authorization', // Asegúrate de que los encabezados estén permitidos
 };
