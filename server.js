@@ -17,7 +17,7 @@ dotenv.config();
 
 
 const app = express();
-const port = process.env.PORT ||5000;
+const port = process.env.DB_PORT||5000;
 
 // Configura CORS para permitir solicitudes solo desde tu frontend en producción
 const corsOptions = {
@@ -260,6 +260,6 @@ app.post('/api/Createterrenos', async (req, res) => {
 
 // Iniciar el servidor
 // Verificar la conexión a la base de datos antes de iniciar el servidor
-app.listen(DB_PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${DB_PORT}`);
+app.listen(port, () => {
+  console.log(`Servidor corriendo en http://localhost:${port}`);
 });
