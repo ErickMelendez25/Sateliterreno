@@ -256,21 +256,10 @@ app.post('/api/Createterrenos', async (req, res) => {
 });
 
 
-// Servir el archivo favicon.ico
-app.use('/favicon.ico', express.static(path.join(__dirname, 'public', 'favicon.ico')));
-
-// Para cualquier otra ruta (no API), servir el index.html
-app.use(express.static(path.join(__dirname, 'dist')));
-
-// Esta ruta debe ir **al final** después de todas las rutas API
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
 
 
 // Iniciar el servidor
 // Verificar la conexión a la base de datos antes de iniciar el servidor
-app.listen(port, () => {
-  console.log(`Servidor corriendo en http://localhost:${port}`);
+app.listen(DB_PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${DB_PORT}`);
 });
