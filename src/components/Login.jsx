@@ -16,7 +16,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const apiUrl = process.env.NODE_ENV === 'production'
-    ? 'https://sateliterreno-production.up.railway.app'
+    ? 'https://jolly-treacle-c57bc7.netlify.app'
     : 'http://localhost:5000';
 
 
