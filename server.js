@@ -17,15 +17,16 @@ dotenv.config();
 
 
 const app = express();
-const port = process.env.PORT ||8080;
+const port = process.env.DB_PORT ||8080;
 
 // Configura CORS para permitir solicitudes solo desde tu frontend en producción
 
 const corsOptions = {
-  origin: [process.env.FRONTEND_URL ||'https://sateliterreno-production.up.railway.app', 'http://localhost:5000'],
+  origin: ['https://sateliterreno-production.up.railway.app', 'http://localhost:5000'],
   methods: 'GET, POST, PUT, DELETE', // Asegúrate de permitir el método POST
   allowedHeaders: 'Content-Type, Authorization', // Asegúrate de que los encabezados estén permitidos
 };
+
 
 
 // Aplica la configuración de CORS
@@ -80,6 +81,20 @@ async function verificarConexion() {
 // Llamar a la función para verificar la conexión antes de iniciar el servidor
 verificarConexion();
 
+
+app.get('/api/usuarios', async (req, res) => {
+  let connection;
+  try {
+    connection = await db.getConnection();
+    const [rows] = await connection.execute('SELECT * FROM usuarios');
+    res.json(rows);  // Aquí se debería devolver JSON
+  } catch (error) {
+    console.error('Error al obtener usuarios:', error);
+    res.status(500).json({ message: 'Error al obtener usuarios', error: error.message });  
+  } finally {
+    if (connection) connection.release();
+  }
+});
 
 
 
@@ -167,19 +182,7 @@ app.get('/api/terrenos/:id', async (req, res) => {
 });
 
 
-app.get('/api/usuarios', async (req, res) => {
-  let connection;
-  try {
-    connection = await db.getConnection();
-    const [rows] = await connection.execute('SELECT * FROM usuarios');
-    res.json(rows);  // Aquí se debería devolver JSON
-  } catch (error) {
-    console.error('Error al obtener usuarios:', error);
-    res.status(500).json({ message: 'Error al obtener usuarios', error: error.message });  
-  } finally {
-    if (connection) connection.release();
-  }
-});
+
 
 
 
