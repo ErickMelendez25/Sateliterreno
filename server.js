@@ -35,14 +35,16 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Crear un pool de conexiones en lugar de una conexión única
+// Crear un pool de conexiones usando la URL de la base de datos de Railway
 const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,  // Espera si no hay conexiones disponibles
-  connectionLimit: 10,  // Número máximo de conexiones simultáneas
-  queueLimit: 0,  // Sin límite de espera
+  host: hostname,  // Host de la URL de la base de datos
+  port: port,  // Puerto de la URL de la base de datos
+  user: user,  // Usuario de la URL de la base de datos
+  password: password,  // Contraseña de la URL de la base de datos
+  database: database,  // Nombre de la base de datos de la URL
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
 
@@ -213,12 +215,6 @@ app.post('/api/Createterrenos', async (req, res) => {
   }
 });
 
-
-
-// Esta ruta debe ir **al final** después de todas las rutas API
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
 
 
 

@@ -23,17 +23,24 @@ const Login = () => {
   // Función para obtener la lista de usuarios
   const fetchUsuarios = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/usuarios`);  // Asegúrate de tener una barra diagonal aquí.
-  
+      const response = await axios.get(`${apiUrl}/api/usuarios`);
+    
       console.log(`${apiUrl}/api/usuarios`);  // Verifica que la URL sea correcta
+      console.log('Usuarios obtenidos:', response.data);  // Muestra los datos obtenidos
   
-      console.log('Usuarios obtenidos:', response.data);
-      setUsuarios(response.data);
+      // Verifica si el contenido que obtienes es HTML
+      if (response.headers['content-type'] && response.headers['content-type'].includes('html')) {
+        console.error('Recibí HTML en lugar de JSON:', response.data);
+        setErrorMessage('Se esperaba un JSON, pero recibí HTML.');
+      } else {
+        setUsuarios(response.data);  // Si la respuesta es JSON, configúralo en el estado
+      }
     } catch (error) {
       console.error('Error al obtener usuarios:', error);
       setErrorMessage('No se pudo obtener la lista de usuarios');
     }
   };
+  
 
   // Llamada para obtener los usuarios cuando se carga el componente
   useEffect(() => {
