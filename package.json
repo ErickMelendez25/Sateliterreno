@@ -5,15 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"npm run build:frontend && npm run dev:backend\" \"npm run dev:frontend\"",
-    "build:frontend": "vite build",
+    "build:frontend": "vite build", 
     "dev:frontend": "vite",  
     "dev:backend": "node server.js",  
-    "build": "vite build",
+    "build": "vite build",  
+    "start": "npm run build:frontend && node server.js", 
     "lint": "eslint .",
     "deploy": "gh-pages -d dist",
     "preview": "vite preview",
-    "predeploy": "npm run build",
-    "start": "node server.js"
+    "predeploy": "npm run build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
