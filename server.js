@@ -17,7 +17,7 @@ dotenv.config();
 
 
 const app = express();
-const port = process.env.DB_PORT ||8080;
+const port = process.env.PORT ||8080;
 
 // Configura CORS para permitir solicitudes solo desde tu frontend en producción
 
@@ -35,10 +35,9 @@ app.use(express.json());
 
 // Configuración de las cabeceras de seguridad Cross-Origin
 app.use((req, res, next) => {
+  res.setHeader('Content-Type', 'application/json');  // Asegura que el tipo de contenido sea JSON
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
   res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-  
-  // Configuración de Content-Security-Policy
   res.setHeader("Content-Security-Policy", 
     "script-src 'self' https://www.gstatic.com https://apis.google.com 'unsafe-inline' 'unsafe-eval'; " + 
     "object-src 'none';");
