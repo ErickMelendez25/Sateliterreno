@@ -214,8 +214,6 @@ app.post('/api/Createterrenos', async (req, res) => {
 });
 
 
-// Para cualquier otra ruta (no API), servir el index.html
-app.use(express.static(path.join(__dirname, 'dist')));
 
 // Esta ruta debe ir **al final** después de todas las rutas API
 app.get('*', (req, res) => {
