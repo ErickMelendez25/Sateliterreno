@@ -10,7 +10,7 @@ const DashboardMain = () => {
 
   const [usuarioLocal, setUsuarioLocal] = useState(null);
   const apiUrl = process.env.NODE_ENV === 'production'
-    ? 'https://tu-api-production-url.com'
+    ? 'https://sateliterreno-production.up.railway.app'
     : 'http://localhost:5000';
 
   const { categoria } = useParams();
