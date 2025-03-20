@@ -23,7 +23,7 @@ const Login = () => {
   // Función para obtener la lista de usuarios
   const fetchUsuarios = async () => {
     try {
-      const response = await axios.get('https://sateliterreno-production.up.railway.app/api/usuarios');
+      const response = await axios.get(`${apiUrl}/api/usuarios`);
     
       console.log(`${apiUrl}/api/usuarios`);  // Verifica que la URL sea correcta
       console.log('Usuarios obtenidos:', response.data);  // Muestra los datos obtenidos
