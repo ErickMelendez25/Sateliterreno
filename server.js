@@ -163,16 +163,16 @@ app.get('/api/usuarios', async (req, res) => {
   let connection;
   try {
     connection = await db.getConnection();
-
     const [rows] = await connection.execute('SELECT * FROM usuarios');
-    res.json(rows);  // Asegúrate de que res.json() esté siendo usado para devolver los datos como JSON
+    res.json(rows);  // Aquí se debería devolver JSON
   } catch (error) {
     console.error('Error al obtener usuarios:', error);
-    res.status(500).json({ message: 'Error al obtener usuarios', error: error.message });  // Muestra el mensaje de error
+    res.status(500).json({ message: 'Error al obtener usuarios', error: error.message });  
   } finally {
     if (connection) connection.release();
   }
 });
+
 
 
 // Ruta para obtener un usuario por ID
@@ -249,6 +249,9 @@ app.post('/api/Createterrenos', async (req, res) => {
   }
 });
 
+
+// Servir el archivo favicon.ico
+app.use('/favicon.ico', express.static(path.join(__dirname, 'public', 'favicon.ico')));
 
 // Para cualquier otra ruta (no API), servir el index.html
 app.use(express.static(path.join(__dirname, 'dist')));
