@@ -60,17 +60,26 @@ const db = mysql.createPool({
 
 
 // Verificación de conexión a la base de datos al iniciar el servidor
-db.getConnection((err, connection) => {
-  if (err) {
-      console.error('Error al conectar a la base de datos:', err.stack);
-      return;
+// Función para verificar la conexión a la base de datos
+async function verificarConexion() {
+  let connection;
+  try {
+    // Intenta obtener una conexión del pool
+    connection = await db.getConnection();
+    console.log('Conexión a la base de datos exitosa');
+    // Si tienes alguna función para realizar algún proceso, puedes llamarla aquí
+    
+  } catch (err) {
+    console.error('Error al conectar a la base de datos:', err.stack);
+    process.exit(1);  // Si hay un error, detén el proceso
+  } finally {
+    // Libera la conexión cuando termines
+    if (connection) connection.release();
   }
-  console.log('Conexión a la base de datos exitosa');
-  cifrarContraseñas();  // Llamar a la función para cifrar contraseñas si es necesario
+}
 
-  // Libera la conexión cuando termines
-  connection.release();
-});
+// Llamar a la función para verificar la conexión antes de iniciar el servidor
+verificarConexion();
 
 
 
