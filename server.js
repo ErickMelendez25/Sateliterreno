@@ -17,35 +17,61 @@ dotenv.config();
 
 
 const app = express();
-const port = process.env.DB_PORT || 8080;
+const port = process.env.PORT ||5000;
 
 // Configura CORS para permitir solicitudes solo desde tu frontend en producción
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? 'https://sateliterreno-production.up.railway.app' 
-    : 'http://localhost:3000',
+  origin: process.env.NODE_ENV === 'production'
+    ? 'https://sateliterreno-production.up.railway.app'
+    : 'http://localhost:5173',  // Cambié esto para permitir localhost:5173
   methods: 'GET, POST, PUT, DELETE',
-  allowedHeaders: 'Content-Type, Authorization, X-Requested-With',  // Agrega X-Requested-With
-  credentials: true,  // Asegúrate de permitir credenciales si es necesario
+  allowedHeaders: 'Content-Type, Authorization, X-Requested-With', 
+  credentials: true,  
 };
-
 
 // Aplica la configuración de CORS
 app.use(cors(corsOptions));
 app.use(express.json());
 
+  // Configuración de las cabeceras de seguridad Cross-Origin
+  app.use((req, res, next) => {
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    
+    // Configuración de Content-Security-Policy
+    res.setHeader("Content-Security-Policy", 
+      "script-src 'self' https://www.gstatic.com https://apis.google.com 'unsafe-inline' 'unsafe-eval'; " + 
+      "object-src 'none';");
+  
+    next();
+  });
+
 // Crear un pool de conexiones en lugar de una conexión única
-// Crear un pool de conexiones usando la URL de la base de datos de Railway
-const pool = mysql.createPool({
-  host: hostname,  // Host de la URL de la base de datos
-  port: port,  // Puerto de la URL de la base de datos
-  user: user,  // Usuario de la URL de la base de datos
-  password: password,  // Contraseña de la URL de la base de datos
-  database: database,  // Nombre de la base de datos de la URL
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
+const db = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER, //Cambiar a DB_USER PARA PRODUCCION
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
+  database: process.env.DB_NAME,
+  connectionLimit: 10,  // Número de conexiones simultáneas que el pool puede manejar
+  waitForConnections: true,  // Espera cuando no haya conexiones disponibles
+  queueLimit: 0  // No limitar el número de consultas que esperan en la cola
 });
+
+
+// Verificación de conexión a la base de datos al iniciar el servidor
+db.getConnection((err, connection) => {
+  if (err) {
+      console.error('Error al conectar a la base de datos:', err.stack);
+      return;
+  }
+  console.log('Conexión a la base de datos exitosa');
+  cifrarContraseñas();  // Llamar a la función para cifrar contraseñas si es necesario
+
+  // Libera la conexión cuando termines
+  connection.release();
+});
+
 
 
 
@@ -61,7 +87,8 @@ app.post('/api/auth', async (req, res) => {
 
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await db.getConnection();
+
     console.log('Conexión obtenida desde el pool');
 
     const [rows] = await connection.execute('SELECT * FROM usuarios WHERE email = ?', [email]);
@@ -97,7 +124,8 @@ app.post('/api/auth', async (req, res) => {
 app.get('/api/terrenos', async (req, res) => {
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await db.getConnection();
+
     const [rows] = await connection.execute('SELECT * FROM terrenos WHERE estado = "disponible"');
     res.json(rows);
   } catch (error) {
@@ -113,7 +141,8 @@ app.get('/api/terrenos/:id', async (req, res) => {
   const { id } = req.params;
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await db.getConnection();
+
     const [rows] = await connection.execute('SELECT * FROM terrenos WHERE id = ?', [id]);
 
     if (rows.length === 0) {
@@ -133,23 +162,26 @@ app.get('/api/terrenos/:id', async (req, res) => {
 app.get('/api/usuarios', async (req, res) => {
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await db.getConnection();
+
     const [rows] = await connection.execute('SELECT * FROM usuarios');
     res.json(rows);  // Asegúrate de que res.json() esté siendo usado para devolver los datos como JSON
   } catch (error) {
     console.error('Error al obtener usuarios:', error);
-    res.status(500).json({ message: 'Error en el servidor' });
+    res.status(500).json({ message: 'Error al obtener usuarios', error: error.message });  // Muestra el mensaje de error
   } finally {
     if (connection) connection.release();
   }
 });
+
 
 // Ruta para obtener un usuario por ID
 app.get('/api/usuarios/:id', async (req, res) => {
   const { id } = req.params;
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await db.getConnection();
+
     const [rows] = await connection.execute('SELECT * FROM usuarios WHERE id = ?', [id]);
 
     if (rows.length === 0) {
@@ -169,7 +201,8 @@ app.get('/api/usuarios/:id', async (req, res) => {
 app.get('/api/favoritos', async (req, res) => {
   let connection;
   try {
-    connection = await pool.getConnection();
+    connection = await db.getConnection();
+
     const [rows] = await connection.execute('SELECT * FROM favoritos');
     res.json(rows);
   } catch (error) {
@@ -194,7 +227,8 @@ app.post('/api/Createterrenos', async (req, res) => {
     console.log('Datos recibidos:', req.body); // Log de los datos recibidos
 
     // Crear una nueva entrada en la base de datos
-    connection = await pool.getConnection();
+    connection = await db.getConnection();
+
     const [result] = await connection.execute(
       'INSERT INTO terrenos (titulo, descripcion, precio, ubicacion_lat, ubicacion_lon, metros_cuadrados, imagenes, estado, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [titulo, descripcion, precio, ubicacion_lat, ubicacion_lon, metros_cuadrados, imagenes, estado, usuario_id]
@@ -216,9 +250,18 @@ app.post('/api/Createterrenos', async (req, res) => {
 });
 
 
+// Para cualquier otra ruta (no API), servir el index.html
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Esta ruta debe ir **al final** después de todas las rutas API
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
 
 
 // Iniciar el servidor
+// Verificar la conexión a la base de datos antes de iniciar el servidor
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });
