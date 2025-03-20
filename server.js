@@ -22,7 +22,7 @@ const port = process.env.PORT ||5000;
 // Configura CORS para permitir solicitudes solo desde tu frontend en producción
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production'
-    ? 'https://sateliterreno-production.up.railway.app'
+    ? 'https://sateliterreno-production.up.railway.app/'
     : 'http://localhost:5173',  // Cambié esto para permitir localhost:5173
   methods: 'GET, POST, PUT, DELETE',
   allowedHeaders: 'Content-Type, Authorization, X-Requested-With', 
@@ -33,18 +33,18 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-  // Configuración de las cabeceras de seguridad Cross-Origin
-  app.use((req, res, next) => {
-    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-    
-    // Configuración de Content-Security-Policy
-    res.setHeader("Content-Security-Policy", 
-      "script-src 'self' https://www.gstatic.com https://apis.google.com 'unsafe-inline' 'unsafe-eval'; " + 
-      "object-src 'none';");
+// Configuración de las cabeceras de seguridad Cross-Origin
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
   
-    next();
-  });
+  // Configuración de Content-Security-Policy
+  res.setHeader("Content-Security-Policy", 
+    "script-src 'self' https://www.gstatic.com https://apis.google.com 'unsafe-inline' 'unsafe-eval'; " + 
+    "object-src 'none';");
+
+  next();
+});
 
 // Crear un pool de conexiones en lugar de una conexión única
 const db = mysql.createPool({
