@@ -20,11 +20,9 @@ const app = express();
 const port = process.env.PORT ||8080;
 
 // Configura CORS para permitir solicitudes solo desde tu frontend en producción
+
 const corsOptions = {
-  origin: [
-    process.env.FRONTEND_URL || 'http://localhost:5173', // Usa la variable de entorno si está definida, o una URL por defecto
-    'http://localhost:5173' // URL local para desarrollo
-  ],
+  origin: [process.env.FRONTEND_URL ||'https://sateliterreno-production.up.railway.app', 'http://localhost:5000'],
   methods: 'GET, POST, PUT, DELETE', // Asegúrate de permitir el método POST
   allowedHeaders: 'Content-Type, Authorization', // Asegúrate de que los encabezados estén permitidos
 };
