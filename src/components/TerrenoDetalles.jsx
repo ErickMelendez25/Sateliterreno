@@ -32,7 +32,7 @@ const TerrenoDetalles = () => {
           setVendedorNombre(response.data.nombre);
         })
         .catch((error) => {
-          console.error('Error al obtener los detalles del vendedor:', error);
+          console.error('Error al obtener los detalles del vendedorddddd:', error);
         });
     }
   }, [terreno]);
