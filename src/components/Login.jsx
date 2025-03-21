@@ -15,9 +15,9 @@ const Login = () => {
   const [usuarios, setUsuarios] = useState([]); // Estado para manejar la lista de usuarios
   const navigate = useNavigate();
 
-  const apiUrl = process.env.NODE_ENV === 'production'
-    ? 'https://sateliterreno-production.up.railway.app'
-    : 'http://localhost:5000';
+
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 
 
   // Función para obtener la lista de usuarios
