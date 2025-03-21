@@ -9,9 +9,8 @@ const DashboardMain = () => {
   const [editMode, setEditMode] = useState(false);
 
   const [usuarioLocal, setUsuarioLocal] = useState(null);
-  const apiUrl = process.env.NODE_ENV === 'production'
-    ? 'https://sateliterreno-production.up.railway.app'
-    : 'http://localhost:5000';
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 
   const { categoria } = useParams();
   const navigate = useNavigate();
