@@ -8,9 +8,7 @@ const TerrenoDetalles = () => {
   const [terreno, setTerreno] = useState(null);
   const [vendedorNombre, setVendedorNombre] = useState('');
   const [loading, setLoading] = useState(true);
-  const apiUrl = process.env.NODE_ENV === 'production'
-    ? 'https://tu-api-production-url.com'
-    : 'http://localhost:5000';
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   useEffect(() => {
     // Obtener detalles del terreno
