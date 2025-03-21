@@ -4,14 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite", 
-    "build": "vite build",  
-    "build:frontend": "vite build",  
-    "start": "node server.js",  
+    "dev": "vite",
+    "build": "vite build",
     "lint": "eslint .",
     "deploy": "gh-pages -d dist",
     "preview": "vite preview",
-    "predeploy": "npm run build"
+    "predeploy": "npm run build",
+    "start": "node server.js"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
