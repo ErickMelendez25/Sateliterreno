@@ -4,16 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
-    "build:frontend": "vite build", 
-    "dev:frontend": "vite", 
-    "dev:backend": "node server.js",  
-    "build": "vite build", 
-    "start": "npm run build:frontend && node server.js",  
+    "dev": "vite",
+    "build": "vite build",
     "lint": "eslint .",
-    "deploy": "gh-pages -d dist",  
-    "preview": "vite preview",  
-    "predeploy": "npm run build" 
+    "deploy": "gh-pages -d dist",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "start": "node server.js"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -28,7 +25,6 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",
     "chart.js": "^4.4.8",
-    "concurrently": "^7.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",

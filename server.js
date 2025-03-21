@@ -17,12 +17,12 @@ dotenv.config();
 
 
 const app = express();
-const port = process.env.PORT ||8080;
+const port = process.env.PORT ||3306;
 
 // Configura CORS para permitir solicitudes solo desde tu frontend en producción
 
 const corsOptions = {
-  origin: [ process.env.URLFRONTEND || 'https://sateliterreno-production.up.railway.app', 'http://localhost:5000'],
+  origin: [ process.env.URLFRONTEND || 'https://sateliterreno-production.up.railway.app', 'http://localhost:5173'],
   methods: 'GET, POST, PUT, DELETE', // Asegúrate de permitir el método POST
   allowedHeaders: 'Content-Type, Authorization', // Asegúrate de que los encabezados estén permitidos
 };
